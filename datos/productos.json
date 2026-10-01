@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "Sahumerio artesanal de lavanda",
+    "description": "Sahumerios naturales de larga duración.",
+    "price": 1200,
+    "image": "https://i.ibb.co/G3HNdGtR/sahumerio.webp"
+  },
+  {
+    "id": 2,
+    "title": "Spray áurico de ruda",
+    "description": "Limpieza y protección energética.",
+    "price": 2500,
+    "image": "https://i.ibb.co/PsR7PJwm/spray.webp"
+  }
+]
