@@ -1,72 +1,83 @@
-import { useState } from "react";
-import { useCart } from "../context/CartContext";
+import { useState, useEffect } from "react";
+import Item from "./Item";
 
-function ItemDetail({ producto }) {
-  const [cantidad, setCantidad] = useState(1);
-  const { addItem } = useCart();
+function ItemListContainer({ productosExtra = [] }) {
+  const [catalogo, setCatalogo] = useState([]);
+  const [cargando, setCargando] = useState(true);
 
-  const aumentar = () => {
-    setCantidad(cantidad + 1);
-  };
+  useEffect(() => {
+    const cargarProductos = async () => {
+      try {
+        setCargando(true);
 
-  const disminuir = () => {
-    if (cantidad > 1) {
-      setCantidad(cantidad - 1);
-    }
-  };
+        const baseUrl = import.meta.env.BASE_URL;
+        const rutaJson = `${baseUrl.endsWith("/") ? baseUrl : baseUrl + "/"}datos/productos.json`;
 
-  const agregarAlCarrito = () => {
-    addItem(producto, cantidad);
-    setCantidad(1);
-  };
+        const response = await fetch(rutaJson);
+
+        if (!response.ok) {
+          throw new Error("No se pudo cargar el archivo de productos");
+        }
+
+        const data = await response.json();
+
+        if (!Array.isArray(data)) {
+          throw new Error("El archivo productos.json no contiene una lista válida");
+        }
+
+        setCatalogo(data);
+      } catch (error) {
+        console.error("Error al cargar el catálogo:", error);
+        setCatalogo([]);
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    cargarProductos();
+  }, []);
+
+  const catalogoCompleto = [
+    ...productosExtra,
+    ...catalogo,
+  ].filter((producto) => producto);
+
+  if (cargando) {
+    return (
+      <section className="ml-products-section">
+        <div className="ml-container">
+          <p style={{ textAlign: "center", padding: "40px" }}>
+            Cargando catálogo...
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section className="ml-detail-section">
-      <div className="ml-detail-card">
-        {/* IMAGEN */}
-        <div className="ml-detail-image">
-          <img src={producto.image} alt={producto.title} />
-        </div>
+    <section className="ml-products-section">
+      <div className="ml-container">
+        <h2>Catálogo de Productos</h2>
 
-        {/* INFORMACIÓN */}
-        <div className="ml-detail-info">
-          <span className="ml-detail-price">${producto.price}</span>
-
-          <h1>{producto.title}</h1>
-
-          <p className="ml-detail-description">{producto.description}</p>
-
-          <span className="ml-envio">Envío gratis</span>
-
-          {/* CANTIDAD */}
-          <div className="ml-detail-quantity">
-            <span>Cantidad:</span>
-
-            <div className="ml-quantity-controls">
-              <button type="button" onClick={disminuir}>
-                −
-              </button>
-              <span>{cantidad}</span>
-              <button type="button" onClick={aumentar}>
-                +
-              </button>
-            </div>
+        {catalogoCompleto.length === 0 ? (
+          <p style={{ textAlign: "center", padding: "40px" }}>
+            No hay productos disponibles.
+          </p>
+        ) : (
+          <div className="ml-products-grid">
+            {catalogoCompleto.map((productoIndividual) => (
+              <Item
+                key={productoIndividual.id}
+                prod={productoIndividual}
+              />
+            ))}
           </div>
-
-          {/* AGREGAR AL CARRITO */}
-          <button
-            type="button"
-            className="ml-detail-cart-btn"
-            onClick={agregarAlCarrito}
-          >
-            🛒 Agregar al carrito
-          </button>
-        </div>
+        )}
       </div>
     </section>
   );
 }
 
-ItemDetail.displayName = 'ItemDetail';
+ItemListContainer.displayName = "ItemListContainer";
 
-export default ItemDetail;
+export default ItemListContainer;
