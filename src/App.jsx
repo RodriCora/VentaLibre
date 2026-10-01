@@ -4,7 +4,7 @@ import './App.css';
 import Layout from './components/Layout';
 import ItemListContainer from './components/ItemListContainer';
 import Home from './components/Home';
-import ItemDetail from './components/ItemDetail';
+import ItemDetailContainer from './components/ItemDetailContainer';
 
 function App() {
   const navigate = useNavigate();
@@ -86,10 +86,10 @@ function App() {
             }
           />
 
-          {/* DETALLE DEL PRODUCTO */}
+          {/* DETALLE DEL PRODUCTO (EN SINGULAR) */}
           <Route
             path="/producto/:id"
-            element={<ItemDetail />}
+            element={<ItemDetailContainer />}
           />
 
           {/* PUBLICAR PRODUCTO */}
