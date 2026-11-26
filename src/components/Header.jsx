@@ -30,7 +30,41 @@ function Header({ busqueda = '', setBusqueda }) {
     <header className="ml-header">
       <div className="ml-header-content">
         <Link to="/" className="ml-logo">
-          VentaLibre
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 64 64"
+            aria-hidden="true"
+          >
+            <path
+              d="M21 22a11 11 0 0 1 22 0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="6"
+              strokeLinecap="round"
+            />
+            <rect
+              x="10"
+              y="22"
+              width="44"
+              height="34"
+              rx="6"
+              fill="currentColor"
+            />
+            <text
+              x="32"
+              y="42"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill="#0f172a"
+              fontSize="24"
+              fontWeight="900"
+              fontFamily="sans-serif"
+            >
+              V
+            </text>
+          </svg>
+          <span>Venta Libre</span>
         </Link>
 
         <div className="ml-search-bar">

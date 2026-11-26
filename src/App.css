@@ -42,15 +42,20 @@ body {
   cursor: pointer;
 }
 
-.ml-logo {
-  color: #cab9dd;
-  text-decoration: none;
-  font-size: 1.8rem;
+.ml-logo,
+.ml-logo:visited,
+.ml-logo:hover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1.5rem;
   font-weight: 800;
+  color: #d8d4f2;
+  text-decoration: none;
   letter-spacing: -0.5px;
-  white-space: nowrap;
-  transition: opacity 0.2s ease;
 }
+
 
 .ml-logo:hover {
   color: #ffffff;
