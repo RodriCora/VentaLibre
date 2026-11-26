@@ -116,6 +116,24 @@ body {
   color: #60a5fa;
   font-weight: 600;
 }
+/* Boton salir */
+.ml-logout-btn {
+  background: transparent;
+  border: 1px solid #475569;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ml-logout-btn:hover {
+  background-color: #1e293b;
+  color: #ffffff;
+  border-color: #64748b;
+}
 
 /* Carrito */
 .ml-nav-links a.cart-link,
@@ -205,6 +223,18 @@ body {
   font-size: 0.95rem;
   font-weight: 600;
   color: #334155;
+}
+
+.ml-title-link,
+.ml-title-link:visited,
+.ml-title-link:hover,
+.ml-title-link:active {
+  text-decoration: none;
+  color: #1e293b;
+}
+
+.ml-title-link:hover .ml-title {
+  color: #3483fa;
 }
 
 .ml-desc {
@@ -1027,21 +1057,85 @@ body {
 }
 
 /* ================================
-   CELULAR
+   CELULAR Y PANTALLAS CHICAS
 ================================ */
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  /* Header apilado y adaptable */
+  .ml-header {
+    padding: 12px 16px;
+  }
+
+  .ml-header-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .ml-logo {
+    text-align: center;
+    font-size: 1.6rem;
+  }
+
+  .ml-search-bar {
+    max-width: 100%;
+  }
+
+  .ml-nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .ml-nav-links a {
+    font-size: 0.88rem;
+    padding: 6px 10px;
+  }
+
+  /* Contenedor principal */
+  .ml-main-full {
+    padding: 16px;
+  }
+
+  /* Inicio */
+  .ml-home {
+    padding: 36px 16px 32px;
+  }
+
+  .ml-home-hero h1 {
+    font-size: 1.85rem;
+  }
+
+  .ml-home-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ml-home-btn {
+    text-align: center;
+  }
+
+  .ml-home-features {
+    grid-template-columns: 1fr;
+    margin-top: 32px;
+  }
+
+  /* Catálogo */
   .ml-products-section {
     padding: 20px 0 35px;
   }
 
   .ml-container {
-    width: calc(100% - 24px);
+    width: calc(100% - 16px);
   }
 
   .ml-products-grid {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+
+  .ml-card {
+    height: auto;
   }
 
   .ml-card-img-container {
@@ -1050,5 +1144,48 @@ body {
 
   .ml-card-body {
     padding: 16px;
+    height: auto;
+  }
+
+  /* Detalle del producto en 1 columna */
+  .ml-detail-section {
+    padding: 20px 16px;
+  }
+
+  .ml-detail-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 20px;
+  }
+
+  .ml-detail-image {
+    height: 260px;
+  }
+
+  .ml-detail-info h1 {
+    font-size: 1.4rem;
+  }
+
+  .ml-detail-cart-btn {
+    width: 100%;
+  }
+
+  /* Formularios (Login / Registro) */
+  .ml-form-section {
+    padding: 24px 16px;
+    min-height: auto;
+  }
+
+  .ml-form-card-centered {
+    padding: 24px 20px;
+  }
+
+  /* Footer en columna */
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+    padding: 24px 16px;
   }
 }

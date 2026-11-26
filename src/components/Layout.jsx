@@ -1,10 +1,10 @@
 import Header from "./Header";
 import Footer from "./Footer";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, busqueda = "", setBusqueda }) => {
   return (
     <>
-      <Header />
+      <Header busqueda={busqueda} setBusqueda={setBusqueda} />
 
       {children}
 

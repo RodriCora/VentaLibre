@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ItemDetail from "./ItemDetail";
+import { obtenerProductoPorId } from "../firebase/productosService";
 
 function ItemDetailContainer() {
   const [producto, setProducto] = useState(null);
   const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState("");
 
   const { id } = useParams();
 
@@ -12,27 +14,14 @@ function ItemDetailContainer() {
     const cargarProducto = async () => {
       try {
         setCargando(true);
+        setError("");
         setProducto(null);
 
-        const baseUrl = import.meta.env.BASE_URL;
-        const rutaJson = `${baseUrl.endsWith("/") ? baseUrl : baseUrl + "/"}datos/productos.json`;
-
-        const response = await fetch(rutaJson);
-
-        if (!response.ok) {
-          throw new Error("No se pudo cargar el archivo de productos");
-        }
-
-        const data = await response.json();
-
-        const productoEncontrado = data.find(
-          (producto) => producto.id === Number(id)
-        );
-
-        setProducto(productoEncontrado || null);
-      } catch (error) {
-        console.error("Error al buscar el producto:", error);
-        setProducto(null);
+        const productoEncontrado = await obtenerProductoPorId(id);
+        setProducto(productoEncontrado);
+      } catch (err) {
+        console.error("Error al buscar el producto en Firestore:", err);
+        setError("Ocurrió un error al cargar el producto. Intentá nuevamente.");
       } finally {
         setCargando(false);
       }
@@ -45,6 +34,14 @@ function ItemDetailContainer() {
     return (
       <p style={{ textAlign: "center", padding: "40px" }}>
         Cargando detalle del producto...
+      </p>
+    );
+  }
+
+  if (error) {
+    return (
+      <p style={{ textAlign: "center", padding: "40px", color: "red" }}>
+        {error}
       </p>
     );
   }

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
 function Item({ prod }) {
@@ -22,18 +23,20 @@ function Item({ prod }) {
 
   return (
     <div className="ml-card">
-      <div className="ml-card-img-container">
+      <Link to={`/producto/${prod.id}`} className="ml-card-img-container">
         <img
           src={prod.image}
           alt={prod.title}
           className="ml-card-img"
         />
-      </div>
+      </Link>
 
       <div className="ml-card-body">
         <span className="ml-price">${prod.price}</span>
 
-        <p className="ml-title">{prod.title}</p>
+        <Link to={`/producto/${prod.id}`} className="ml-title-link">
+          <p className="ml-title">{prod.title}</p>
+        </Link>
 
         <p className="ml-desc">{prod.description}</p>
 
