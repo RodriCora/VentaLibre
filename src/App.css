@@ -1056,82 +1056,65 @@ body {
   }
 }
 
-/* ================================
-   CELULAR Y PANTALLAS CHICAS
-================================ */
-
 @media (max-width: 768px) {
-  /* Header apilado y adaptable */
   .ml-header {
-    padding: 12px 16px;
+    padding: 14px 14px;
   }
 
   .ml-header-content {
     flex-direction: column;
     align-items: stretch;
-    gap: 12px;
+    gap: 10px;
   }
 
   .ml-logo {
     text-align: center;
-    font-size: 1.6rem;
+    font-size: 2rem;
+    letter-spacing: -0.5px;
   }
 
   .ml-search-bar {
     max-width: 100%;
   }
 
+  .ml-search-bar input {
+    padding: 9px 12px;
+    font-size: 0.9rem;
+  }
+
   .ml-nav-links {
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
   }
 
-  .ml-nav-links a {
-    font-size: 0.88rem;
+  .ml-nav-links a,
+  .ml-logout-btn {
+    font-size: 0.82rem;
     padding: 6px 10px;
+    white-space: nowrap;
   }
 
-  /* Contenedor principal */
+  .ml-nav-links a.cart-link {
+    padding: 6px 12px;
+  }
+
   .ml-main-full {
-    padding: 16px;
+    padding: 12px;
   }
 
-  /* Inicio */
-  .ml-home {
-    padding: 36px 16px 32px;
-  }
-
-  .ml-home-hero h1 {
-    font-size: 1.85rem;
-  }
-
-  .ml-home-buttons {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .ml-home-btn {
-    text-align: center;
-  }
-
-  .ml-home-features {
-    grid-template-columns: 1fr;
-    margin-top: 32px;
-  }
-
-  /* Catálogo */
   .ml-products-section {
-    padding: 20px 0 35px;
+    padding: 16px 0 32px;
   }
 
   .ml-container {
-    width: calc(100% - 16px);
+    width: calc(100% - 12px);
   }
 
   .ml-products-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
 
   .ml-card {
@@ -1139,53 +1122,50 @@ body {
   }
 
   .ml-card-img-container {
-    height: 220px;
+    height: 200px;
   }
 
   .ml-card-body {
-    padding: 16px;
+    padding: 14px;
     height: auto;
   }
 
-  /* Detalle del producto en 1 columna */
   .ml-detail-section {
-    padding: 20px 16px;
+    padding: 16px 12px;
   }
 
   .ml-detail-card {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 20px;
+    gap: 20px;
+    padding: 18px;
   }
 
   .ml-detail-image {
-    height: 260px;
+    height: 240px;
   }
 
   .ml-detail-info h1 {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
   }
 
   .ml-detail-cart-btn {
     width: 100%;
   }
 
-  /* Formularios (Login / Registro) */
   .ml-form-section {
-    padding: 24px 16px;
+    padding: 20px 12px;
     min-height: auto;
   }
 
   .ml-form-card-centered {
-    padding: 24px 20px;
+    padding: 22px 16px;
   }
 
-  /* Footer en columna */
   .footer-content {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 24px;
-    padding: 24px 16px;
+    gap: 20px;
+    padding: 20px 14px;
   }
 }

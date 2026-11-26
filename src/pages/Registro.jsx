@@ -114,7 +114,7 @@ const Registro = () => {
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                placeholder="Ej: Rodrigo"
+                placeholder="Ej: Juan"
               />
             </div>
 
@@ -125,7 +125,7 @@ const Registro = () => {
                 type="text"
                 value={apellido}
                 onChange={(e) => setApellido(e.target.value)}
-                placeholder="Ej: Corazza"
+                placeholder="Ej: Perez"
               />
             </div>
           </div>

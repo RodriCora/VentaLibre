@@ -3,13 +3,13 @@ import { getAuth } from 'firebase/auth';
 import { initializeFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAVrRy0gk30l1XjNWrbwqloyZOCz6XJKW8",
-  authDomain: "ventalibrefire.firebaseapp.com",
-  projectId: "ventalibrefire",
-  storageBucket: "ventalibrefire.firebasestorage.app",
-  messagingSenderId: "555450978967",
-  appId: "1:555450978967:web:4a66239fae09f02c278fd2",
-  measurementId: "G-QQ32M3BY5F"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
