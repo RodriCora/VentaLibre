@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { crearOrden } from '../firebase/productosService';
+import {
+  crearOrden,
+  obtenerPerfilUsuario,
+} from '../firebase/productosService';
 import './CartView.css';
 
 const CartView = () => {
@@ -18,13 +21,37 @@ const CartView = () => {
 
   const { usuario } = useAuth();
   const navigate = useNavigate();
+
+  const [perfil, setPerfil] = useState(null);
   const [compraFinalizada, setCompraFinalizada] = useState(null);
   const [procesando, setProcesando] = useState(false);
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    const cargarDatosEnvio = async () => {
+      if (!usuario?.uid) {
+        setPerfil(null);
+        return;
+      }
+      try {
+        const datos = await obtenerPerfilUsuario(usuario.uid);
+        setPerfil(datos);
+      } catch (err) {
+        console.error('Error al cargar datos de envío:', err);
+      }
+    };
+
+    cargarDatosEnvio();
+  }, [usuario]);
+
   const handleFinalizarCompra = async () => {
     if (!usuario) {
       navigate('/login');
+      return;
+    }
+
+    if (!perfil?.direccion || !perfil?.ciudad) {
+      setError('Completá tu domicilio de entrega en "Mi cuenta" antes de finalizar la compra.');
       return;
     }
 
@@ -36,6 +63,13 @@ const CartView = () => {
         comprador: {
           email: usuario.email,
           uid: usuario.uid,
+          nombre: `${perfil.nombre || ''} ${perfil.apellido || ''}`.trim() || usuario.displayName || '',
+          telefono: perfil.telefono || '',
+        },
+        envio: {
+          direccion: perfil.direccion,
+          ciudad: perfil.ciudad,
+          codigoPostal: perfil.codigoPostal || '',
         },
         items: cart.map((prod) => ({
           id: prod.id,
@@ -52,6 +86,8 @@ const CartView = () => {
         orden: idOrden,
         email: usuario.email,
         total: totalPrice,
+        envio: nuevaOrden.envio,
+        destinatario: nuevaOrden.comprador.nombre,
       });
       clearCart();
     } catch (err) {
@@ -73,6 +109,11 @@ const CartView = () => {
         <div className="cart-order-details">
           <div>Número de orden: <strong>{compraFinalizada.orden}</strong></div>
           <div>Total abonado: <strong>${compraFinalizada.total}</strong></div>
+          {compraFinalizada.envio && (
+            <div style={{ marginTop: '8px', fontSize: '0.9rem' }}>
+              Envío a: <strong>{compraFinalizada.envio.direccion}</strong> ({compraFinalizada.envio.ciudad})
+            </div>
+          )}
         </div>
         <Link to="/productos" className="cart-btn-primary">
           Seguir comprando
@@ -168,6 +209,38 @@ const CartView = () => {
 
         <div className="cart-card cart-summary">
           <h3 className="cart-summary-title">Resumen de compra</h3>
+
+          {/* BLOQUE DE DATOS DE ENVÍO DEL USUARIO */}
+          {usuario && (
+            <div className="cart-shipping-box">
+              <div className="cart-shipping-header">
+                <strong>🚚 Datos de envío</strong>
+                <Link to="/perfil" className="cart-shipping-edit">
+                  Modificar
+                </Link>
+              </div>
+
+              {perfil?.direccion ? (
+                <>
+                  <div>
+                    Recibe: <strong>{perfil.nombre} {perfil.apellido}</strong>
+                  </div>
+                  <div>{perfil.direccion}</div>
+                  <div>
+                    {perfil.ciudad} {perfil.codigoPostal ? `(CP ${perfil.codigoPostal})` : ''}
+                  </div>
+                  {perfil.telefono && <div>Tel: {perfil.telefono}</div>}
+                </>
+              ) : (
+                <div className="cart-shipping-missing">
+                  Aún no cargaste tu dirección.{' '}
+                  <Link to="/perfil" className="cart-shipping-edit">
+                    Completar ahora
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="cart-summary-row">
             <span>Productos ({totalQuantity})</span>

@@ -54,13 +54,16 @@ function Header({ busqueda = '', setBusqueda }) {
               <Link to="/registro">Registrarse</Link>
             </>
           ) : (
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="ml-logout-btn"
-            >
-              Salir
-            </button>
+            <>
+              {!esAdmin && <Link to="/perfil">Mi cuenta</Link>}
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="ml-logout-btn"
+              >
+                Salir
+              </button>
+            </>
           )}
 
           <Link to="/carrito" className="cart-link">

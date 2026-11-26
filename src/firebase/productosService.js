@@ -6,6 +6,7 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  setDoc,
 } from 'firebase/firestore';
 import { db } from './config';
 
@@ -25,7 +26,6 @@ export const obtenerProductos = async () => {
     return fechaB - fechaA;
   });
 };
-
 
 export const obtenerProductoPorId = async (id) => {
   const docRef = doc(db, COLECCION_PRODUCTOS, id);
@@ -64,4 +64,24 @@ export const crearOrden = async (orden) => {
     fecha: new Date().toISOString(),
   });
   return docRef.id;
+};
+
+export const obtenerPerfilUsuario = async (uid) => {
+  if (!uid) return null;
+  const userRef = doc(db, 'usuarios', uid);
+  const snap = await getDoc(userRef);
+  if (!snap.exists()) return null;
+  return { id: snap.id, ...snap.data() };
+};
+
+export const guardarPerfilUsuario = async (uid, datosPerfil) => {
+  const userRef = doc(db, 'usuarios', uid);
+  await setDoc(
+    userRef,
+    {
+      ...datosPerfil,
+      actualizadoEn: new Date().toISOString(),
+    },
+    { merge: true }
+  );
 };

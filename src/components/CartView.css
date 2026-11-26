@@ -218,3 +218,43 @@
     grid-template-columns: 1fr;
   }
 }
+ .cart-shipping-box {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  color: #334155;
+  text-align: left;
+  line-height: 1.45;
+}
+
+.cart-shipping-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.cart-shipping-header strong {
+  color: #0f172a;
+  font-size: 0.9rem;
+}
+
+.cart-shipping-edit {
+  color: #3483fa;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.cart-shipping-edit:hover {
+  text-decoration: underline;
+}
+
+.cart-shipping-missing {
+  color: #b45309;
+  font-size: 0.82rem;
+  margin-top: 4px;
+}
