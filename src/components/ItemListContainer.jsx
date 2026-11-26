@@ -33,10 +33,11 @@ function ItemListContainer({ productosExtra = [], busqueda = "" }) {
     setPaginaActual(1);
   }, [busqueda]);
 
-  const cambiarPagina = (nuevaPagina) => {
-    setPaginaActual(nuevaPagina);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [paginaActual]);
 
   const catalogoCompleto = [...productosExtra, ...catalogo].filter(Boolean);
 
@@ -115,7 +116,7 @@ function ItemListContainer({ productosExtra = [], busqueda = "" }) {
               >
                 <button
                   type="button"
-                  onClick={() => cambiarPagina(Math.max(paginaActual - 1, 1))}
+                  onClick={() => setPaginaActual((prev) => Math.max(prev - 1, 1))}
                   disabled={paginaActual === 1}
                   style={{ padding: "8px 12px", cursor: "pointer" }}
                 >
@@ -126,7 +127,7 @@ function ItemListContainer({ productosExtra = [], busqueda = "" }) {
                   <button
                     key={num}
                     type="button"
-                    onClick={() => cambiarPagina(num)}
+                    onClick={() => setPaginaActual(num)}
                     style={{
                       padding: "8px 12px",
                       fontWeight: paginaActual === num ? "bold" : "normal",
@@ -143,7 +144,9 @@ function ItemListContainer({ productosExtra = [], busqueda = "" }) {
 
                 <button
                   type="button"
-                  onClick={() => cambiarPagina(Math.min(paginaActual + 1, totalPaginas))}
+                  onClick={() =>
+                    setPaginaActual((prev) => Math.min(prev + 1, totalPaginas))
+                  }
                   disabled={paginaActual === totalPaginas}
                   style={{ padding: "8px 12px", cursor: "pointer" }}
                 >
