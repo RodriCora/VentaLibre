@@ -29,10 +29,14 @@ function ItemListContainer({ productosExtra = [], busqueda = "" }) {
     cargarProductos();
   }, []);
 
-  // Reiniciar a la página 1 cada vez que cambia la búsqueda
   useEffect(() => {
     setPaginaActual(1);
   }, [busqueda]);
+
+  const cambiarPagina = (nuevaPagina) => {
+    setPaginaActual(nuevaPagina);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const catalogoCompleto = [...productosExtra, ...catalogo].filter(Boolean);
 
@@ -45,7 +49,6 @@ function ItemListContainer({ productosExtra = [], busqueda = "" }) {
     return titulo.includes(textoBusqueda) || descripcion.includes(textoBusqueda);
   });
 
-  // Cálculos de paginación
   const totalPaginas = Math.ceil(productosFiltrados.length / PRODUCTOS_POR_PAGINA);
   const indiceInicio = (paginaActual - 1) * PRODUCTOS_POR_PAGINA;
   const productosPaginados = productosFiltrados.slice(
@@ -112,7 +115,7 @@ function ItemListContainer({ productosExtra = [], busqueda = "" }) {
               >
                 <button
                   type="button"
-                  onClick={() => setPaginaActual((p) => Math.max(p - 1, 1))}
+                  onClick={() => cambiarPagina(Math.max(paginaActual - 1, 1))}
                   disabled={paginaActual === 1}
                   style={{ padding: "8px 12px", cursor: "pointer" }}
                 >
@@ -123,7 +126,7 @@ function ItemListContainer({ productosExtra = [], busqueda = "" }) {
                   <button
                     key={num}
                     type="button"
-                    onClick={() => setPaginaActual(num)}
+                    onClick={() => cambiarPagina(num)}
                     style={{
                       padding: "8px 12px",
                       fontWeight: paginaActual === num ? "bold" : "normal",
@@ -140,7 +143,7 @@ function ItemListContainer({ productosExtra = [], busqueda = "" }) {
 
                 <button
                   type="button"
-                  onClick={() => setPaginaActual((p) => Math.min(p + 1, totalPaginas))}
+                  onClick={() => cambiarPagina(Math.min(paginaActual + 1, totalPaginas))}
                   disabled={paginaActual === totalPaginas}
                   style={{ padding: "8px 12px", cursor: "pointer" }}
                 >
